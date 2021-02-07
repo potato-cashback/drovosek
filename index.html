@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+	<title>Дровосек</title>
+	<style>
+        p {
+            padding: 0;
+            margin: 0;
+        }
+        #container {
+            display: flex;
+			flex-direction: row;
+			justify-content: space-around;
+            margin: 50px;
+        }
+	</style>
+	<link href="form.css" rel="stylesheet" type="text/css" />
+	<link href="style.css" rel="stylesheet" type="text/css" />
+
+	<!-- Global site tag (gtag.js) - Google Analytics -->
+	<script async src="https://www.googletagmanager.com/gtag/js?id=G-B2L9K72L9C"></script>
+	<script>
+		window.dataLayer = window.dataLayer || [];
+		function gtag(){dataLayer.push(arguments);}
+		gtag('js', new Date());
+
+		gtag('config', 'G-B2L9K72L9C');
+	</script>
+</head>
+<body>
+	<div class="loading">
+		<div>
+			<img src="/loading.png"/> <br>
+			<p>Наберите 500 очков - выиграйте приз!</p>
+		</div>
+    </div>
+	<div style="display:none;">
+		<img src="/sprites/bg_trees.png"/>
+		<img src="/sprites/branch_right.png"/>
+		<img src="/sprites/ground_left.png"/>
+		<img src="/sprites/ground_right.png"/>
+		<img src="/sprites/hand_down.png"/>
+		<img src="/sprites/hand_up.png"/>
+		<img src="/sprites/left.png"/>
+		<img src="/sprites/lumber_body.png"/>
+		<img src="/sprites/lumber_died.png"/>
+		<img src="/sprites/play.png"/>
+		<img src="/sprites/refresh.png"/>
+		<img src="/sprites/right.png"/>
+		<img src="/sprites/timeline.png"/>
+		<img src="/sprites/trunk.png"/>
+        <img src="/sprites/stones.png"/>
+        <img src="/sprites/stumb.png"/>
+	</div>
+	
+    <script>
+        window.addEventListener("load", ()=>{
+            let a = 2500;
+			
+			setTimeout(()=>{
+				document.querySelector(".loading > div > p").innerText = "Рубите дерево и уклоняйтесь от веток";
+			}, a)
+			setTimeout(()=>{
+				document.querySelector(".loading").style.animation = "disappear 200ms";
+			}, 2*a)
+			setTimeout(()=>{
+					document.querySelector(".loading").style.display = "none";
+				}, 2*a + 200)
+        })
+    </script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.0.0/p5.min.js"></script>
+	<script src="script.js"></script>
+
+	<!-- <div id="form">
+		<form id="reciept">
+			<h4>Введите данные с чека чтобы продолжить игру</h4>
+			<label for="date">Дата на чеке</label>
+			<input type="date" name="date" placeholder="Дата" required autocomplete="off"/><br>
+			<label for="time">Время на чеке</label>
+			<input type="time" name="time" placeholder="Время" required autocomplete="off"/>
+			<br>
+			<label for="fnsKkmId">Код ККМ КГД (РНМ)</label>
+			<input type="text" name="fnsKkmId" placeholder="Код ККМ КГД (РНМ)" required autocomplete="off"/>
+			<label for="fiscalId">Номер фискального чека</label>
+			<input type="text" name="fiscalId" placeholder="Номер фискального чека" required autocomplete="off"/>
+			<label for="totalSum">Итоговая сумма чека</label>
+			<input type="text" name="totalSum" placeholder="Итоговая сумма чека" required autocomplete="off"/>
+			
+			<input type="submit" name="signup_submit" value="Отправить чек" />
+		</form>
+	</div> -->
+
+</body>
+
+<!-- The core Firebase JS SDK is always required and must be listed first -->
+<script src="https://www.gstatic.com/firebasejs/8.2.6/firebase-app.js"></script>
+
+<!-- TODO: Add SDKs for Firebase products that you want to use
+     https://firebase.google.com/docs/web/setup#available-libraries -->
+<script src="https://www.gstatic.com/firebasejs/8.2.6/firebase-analytics.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.2.6/firebase-firestore.js"></script>
+
+<script>
+	// Your web app's Firebase configuration
+	// For Firebase JS SDK v7.20.0 and later, measurementId is optional
+	var firebaseConfig = {
+		apiKey: "AIzaSyAJjTgDpVTfA04qqAmSA2AOzmzSUPS-_z0",
+		authDomain: "game-data-d5da2.firebaseapp.com",
+		projectId: "game-data-d5da2",
+		storageBucket: "game-data-d5da2.appspot.com",
+		messagingSenderId: "378528693608",
+		appId: "1:378528693608:web:b992671a7755dcc7aa6add",
+		measurementId: "G-FRV1T5H0E1"
+	};
+	// Initialize Firebase
+	firebase.initializeApp(firebaseConfig);
+	firebase.analytics();
+	
+	const db = firebase.firestore();
+	
+	// to prevent errors with time stamps
+	db.settings({timestampsInSnapshots: true})
+</script>
+
+
+</html>
