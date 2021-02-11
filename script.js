@@ -68,7 +68,7 @@ function setup() {
     });
 
     left = createA('#', "<img src='./sprites/left.png'/>");
-	left.id('left');
+	  left.id('left');
     left.class('button');
     left.style('display: none;');
     left.mousePressed(function() {
@@ -79,9 +79,9 @@ function setup() {
 	});
 
 	right = createA('#', "<img src='./sprites/right.png'/>");
-    right.id('right');
-    right.class('button');
-    right.style('display: none;');
+  right.id('right');
+  right.class('button');
+  right.style('display: none;');
 	right.mousePressed(function() {
 		g.pos = true;
         frame_player = 0;
@@ -99,7 +99,6 @@ function setup() {
     winText = createA('https://docs.google.com/forms/d/e/1FAIpQLSd_G1wpMzelKm4X61aqZvLa3J1GXTaGwkwg5klx-GiJwLMe1A/viewform?usp=sf_link', 'Получить приз!');
 	winText.id("winText");
 	winText.style('bottom: -100vh;');
-    
 	noStroke();
     frameRate(30);
 }
@@ -144,8 +143,17 @@ function draw() {
 
         if (newplayer.lives == 0) once = false;
         if (once) {
-            newplayer.score = max(newplayer.score, g.score);
             newplayer.lives--;
+			try{
+				console.log(db.collection('drovosek').doc().set({
+					score: g.score,
+					time: new Date() - 0
+				}))
+			}catch(er){
+				console.log(er)
+			}
+
+            newplayer.score = max(newplayer.score, g.score);
             localStorage.setItem('player', JSON.stringify(newplayer));
             once = false;
         }
@@ -216,10 +224,7 @@ function draw() {
     if (start) {
         fill('white');
         rect((w-200*k)/2, 20, (200*k), 42*k, 10);
-        if (g.time > 20) 
-            fill('#7ead4f');
-        else
-            fill('#ce453a');
+        fill('#7ead4f');
         rect((w-200*k)/2 + 5, 25, (180*k) * (g.time/100), 30*k);
         image(bar, (w-200*k)/2, 20, 200*k, 42*k);
 
@@ -233,9 +238,9 @@ function draw() {
         textAlign(CENTER);
         textSize(48);
         fill('#4d4d4d');
-        text('Дровосек', w/2, 90);
-        textSize(30);
-        text('500 очков = приз\n*сохраните чек', w/2, 170);
+        text('Дровосек', w/2, 70);
+        textSize(33);
+        text('500 очков = приз\n*сохраните чек', w/2, 130);
     }
 
     g.time = max(0, g.time - g.level*0.05);

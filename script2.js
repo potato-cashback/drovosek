@@ -1,10 +1,11 @@
 var localStorage = window.localStorage;
-
+localStorage.clear();
 var player = localStorage.getItem('player');
 if (player === null) {
     localStorage.setItem('player',JSON.stringify({
         'id': Date.now(),
         'score': 0,
+        'lives': 10000,
     }));
 }
 
@@ -45,7 +46,7 @@ function setup() {
 
     play = createA('#', "<img src='./sprites/play.png'/>");
     play.id('play');
-    play.c
+    play.class('button');
     play.mousePressed(function() {
         left.style('display: block;');
         right.style('display: block;');
@@ -55,6 +56,7 @@ function setup() {
 
     restart = createA('#', "<img src='./sprites/refresh.png'/>");
     restart.id('restart');
+    restart.class('button');
     restart.style('display: none;');
     restart.mousePressed(function() {
         left.style('display: none;');
@@ -66,7 +68,8 @@ function setup() {
     });
 
     left = createA('#', "<img src='./sprites/left.png'/>");
-	left.id('left');
+	  left.id('left');
+    left.class('button');
     left.style('display: none;');
     left.mousePressed(function() {
 		g.pos = false;
@@ -76,8 +79,9 @@ function setup() {
 	});
 
 	right = createA('#', "<img src='./sprites/right.png'/>");
-    right.id('right');
-    right.style('display: none;');
+  right.id('right');
+  right.class('button');
+  right.style('display: none;');
 	right.mousePressed(function() {
 		g.pos = true;
         frame_player = 0;
@@ -95,7 +99,6 @@ function setup() {
     winText = createA('https://docs.google.com/forms/d/e/1FAIpQLSd_G1wpMzelKm4X61aqZvLa3J1GXTaGwkwg5klx-GiJwLMe1A/viewform?usp=sf_link', 'Получить приз!');
 	winText.id("winText");
 	winText.style('bottom: -100vh;');
-    
 	noStroke();
     frameRate(30);
 }
@@ -135,10 +138,12 @@ function draw() {
 
     k = blk/500;
     var newplayer = JSON.parse(localStorage.getItem('player'));
-    if (g.gameOver) {
+    if (g.gameOver || newplayer.lives == 0) {
         start = false;
 
+        if (newplayer.lives == 0) once = false;
         if (once) {
+            newplayer.lives--;
 			try{
 				console.log(db.collection('drovosek').doc().set({
 					score: g.score,
@@ -233,9 +238,9 @@ function draw() {
         textAlign(CENTER);
         textSize(48);
         fill('#4d4d4d');
-        text('Дровосек', w/2, 90);
-    
-        text('500 очков = приз\n*сохраните чек', w/2, 190);
+        text('Дровосек', w/2, 70);
+        textSize(33);
+        text('500 очков = приз\n*сохраните чек', w/2, 130);
     }
 
     g.time = max(0, g.time - g.level*0.05);
