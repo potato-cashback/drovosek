@@ -147,7 +147,8 @@ function draw() {
 			try{
 				console.log(db.collection('drovosek').doc().set({
 					score: g.score,
-					time: new Date() - 0
+					time: new Date() - 0,
+					timeS: new Date() + ""
 				}))
 			}catch(er){
 				console.log(er)

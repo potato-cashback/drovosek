@@ -1,12 +1,13 @@
 var localStorage = window.localStorage;
-localStorage.clear();
+// localStorage.clear();
 var player = localStorage.getItem('player');
-if (player === null) {
-    localStorage.setItem('player',JSON.stringify({
+if (player === null || JSON.parse(localStorage.getItem('player')).userId === undefined) {
+    player = JSON.stringify({
         'id': Date.now(),
         'score': 0,
-        'lives': 10000,
-    }));
+        'lives': 10000
+    })
+	localStorage.setItem('player', player);
 }
 
 var winNumber = 500;
@@ -137,7 +138,7 @@ function draw() {
     image(stones, (w - 150*r)/2, ground - 50*r, 150*r, 72*r);
 
     k = blk/500;
-    var newplayer = JSON.parse(localStorage.getItem('player'));
+    var newplayer = JSON.parse(player);
     if (g.gameOver || newplayer.lives == 0) {
         start = false;
 
@@ -147,7 +148,9 @@ function draw() {
 			try{
 				console.log(db.collection('drovosek').doc().set({
 					score: g.score,
-					time: new Date() - 0
+					time: new Date() - 0,
+					timeS: new Date() + "",
+					id: JSON.parse(player).id
 				}))
 			}catch(er){
 				console.log(er)
